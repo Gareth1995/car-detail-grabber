@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Data Extractor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Car Data Extractor</h1>
+        <p>Upload an image of a car, and the system will extract details like make, color, and number plate.</p>
+        
+        <div class="drop-zone" id="drop-zone">Drag image here or click to upload</div>
+        <input type="file" id="file-input" accept="image/*" hidden>
+        
+        <button id="generate-data">Generate Data</button>
+    </div>
+
+    <div id="app"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
