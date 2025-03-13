@@ -17,7 +17,15 @@
         <button id="generate-data">Generate Data</button>
     </div>
 
-    <div id="app"></div>
+    <div class="info-container" style="display: none">
+        <h2>AI Generated Info</h2>
+        <button class="close-button" onclick="hideModal()">✖</button>
+        <ul>
+            <li><label for="car-make">Make:</label><input type="text" id="car-make"></li>
+            <li><label for="car-colour">Colour:</label><input type="text" id="car-colour"></li>
+            <li><label for="car-number-plate">Number plate #:</label><input type="text" id="car-number-plate"></li>
+        </ul>
+    </div>
     
     <script src="script.js"></script>
 </body>

@@ -2,6 +2,7 @@
 const dropZone = document.getElementById("drop-zone");
 const fileInput = document.getElementById("file-input");
 const generateButton = document.getElementById("generate-data");
+const infoContainer = document.getElementsByClassName("info-container")[0];
 
 // add event listners
 fileInput.addEventListener("change", uploadImage);
@@ -33,11 +34,14 @@ dropZone.addEventListener("drop", (e) => {
 function uploadImage() {
     const fileObj = fileInput.files[0]; // get the file object
     let imgUrl = URL.createObjectURL(fileObj); // get the image url
-    dropZone.style.backgroundImage = `url(${imgUrl})`; // set the image url as background image
-    
+    dropZone.style.backgroundImage = `url(${imgUrl})`; // set the image url as background image 
 }
 
 async function generateData() {
     console.log(fileInput.files[0]);
+    infoContainer.style.display = 'block';
 }
 
+function hideModal(){
+    infoContainer.style.display = 'none';
+}
