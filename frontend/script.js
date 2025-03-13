@@ -37,6 +37,16 @@ function uploadImage() {
     dropZone.style.backgroundImage = `url(${imgUrl})`; // set the image url as background image 
 }
 
+async function callBackendLLM(inputImage, url) {    
+    try {
+        const response = await axios.post(url, { Image: inputImage });
+        return response.data; // Ensure this is returned
+    } catch (error) {
+        console.error("Error calling backend:", error);
+        return null; // Return null or handle error properly
+    }
+}
+
 async function generateData() {
     file = fileInput.files[0]
     console.log(file);
@@ -48,29 +58,16 @@ async function generateData() {
             const base64String = reader.result.split(',')[1]; // Get Base64 part
 
             //////// Make this a separate function /////////////////////////
-            // reader.readAsDataURL(file); // Trigger the file read
             const url = 'http://localhost:3000/invoke-llm';  // server url for data gen
-
-            // Making a POST request using axios
-            axios.post(url, { Image: base64String })
-            .then(response => {
-                console.log('GPT output:', response.data); // Handle the response from the server
-            })
-            .catch((error) => {
-                console.error('Error:', error); // Handle any errors
-            });
+            const llmResponse = await callBackendLLM(base64String, url);
+            console.log('GPT response:', llmResponse);
             /////////////////////////////////////////////////////////
         }
 
         reader.readAsDataURL(file); // Read the image file as Base64
     }
     
-    infoContainer.style.display = 'block';
-
-    // The data you want to send in the POST request
-    // const data = {
-    //     input: 'pretend this is an image of a car. You see that it is a red Toyota and the number plate is CY445789' // Replace with actual input
-    // };
+    // infoContainer.style.display = 'block';
     
 }
 
