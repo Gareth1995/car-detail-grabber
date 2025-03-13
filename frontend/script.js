@@ -38,25 +38,40 @@ function uploadImage() {
 }
 
 async function generateData() {
-    console.log(fileInput.files[0]);
+    file = fileInput.files[0]
+    console.log(file);
+
+    if(file){
+        
+        const reader = new FileReader();
+        reader.onloadend = async function () {
+            const base64String = reader.result.split(',')[1]; // Get Base64 part
+
+            //////// Make this a separate function /////////////////////////
+            // reader.readAsDataURL(file); // Trigger the file read
+            const url = 'http://localhost:3000/invoke-llm';  // server url for data gen
+
+            // Making a POST request using axios
+            axios.post(url, { Image: base64String })
+            .then(response => {
+                console.log('GPT output:', response.data); // Handle the response from the server
+            })
+            .catch((error) => {
+                console.error('Error:', error); // Handle any errors
+            });
+            /////////////////////////////////////////////////////////
+        }
+
+        reader.readAsDataURL(file); // Read the image file as Base64
+    }
+    
     infoContainer.style.display = 'block';
 
-    const url = 'http://localhost:3000/invoke-llm';  // sever url for data gen
-
     // The data you want to send in the POST request
-    const data = {
-        input: 'your input data here' // Replace with actual input
-    };
-
-    // Making a POST request using axios
-    axios.post(url, data)
-    .then(response => {
-        console.log('Success:', response.data); // Handle the response from the server
-    })
-    .catch((error) => {
-        console.error('Error:', error); // Handle any errors
-    });
-        console.log('Data submitted');
+    // const data = {
+    //     input: 'pretend this is an image of a car. You see that it is a red Toyota and the number plate is CY445789' // Replace with actual input
+    // };
+    
 }
 
 function hideModal(){
