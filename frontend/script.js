@@ -40,8 +40,29 @@ function uploadImage() {
 async function generateData() {
     console.log(fileInput.files[0]);
     infoContainer.style.display = 'block';
+
+    const url = 'http://localhost:3000/invoke-llm';  // sever url for data gen
+
+    // The data you want to send in the POST request
+    const data = {
+        input: 'your input data here' // Replace with actual input
+    };
+
+    // Making a POST request using axios
+    axios.post(url, data)
+    .then(response => {
+        console.log('Success:', response.data); // Handle the response from the server
+    })
+    .catch((error) => {
+        console.error('Error:', error); // Handle any errors
+    });
+        console.log('Data submitted');
 }
 
 function hideModal(){
     infoContainer.style.display = 'none';
+}
+
+function submitData(){
+    
 }

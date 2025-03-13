@@ -21,12 +21,16 @@
         <h2>AI Generated Info</h2>
         <button class="close-button" onclick="hideModal()">✖</button>
         <ul>
+            <li><label for="parking-bay">Parking bay</label><input type="text" id="parking-bay"></li>
             <li><label for="car-make">Make:</label><input type="text" id="car-make"></li>
             <li><label for="car-colour">Colour:</label><input type="text" id="car-colour"></li>
             <li><label for="car-number-plate">Number plate #:</label><input type="text" id="car-number-plate"></li>
         </ul>
+        <button id="submit-data" onclick="submitData()">Submit</button>
     </div>
     
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </body>
 </html>
