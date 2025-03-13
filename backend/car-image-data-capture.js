@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import { ChatOpenAI } from "@langchain/openai";
-import { HumanMessage, SystemMessage } from "@langchain/core/messages";
+import { HumanMessage, SystemMessage, AIMessage  } from "@langchain/core/messages";
+import { ChatPromptTemplate } from "@langchain/core/prompts"
 import cors from 'cors';
 import express from 'express';
 
@@ -14,28 +15,52 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(cors()); // Use the cors middleware
 
 
-async function callLlm(userInput){
+async function callLlm(userImageInput){
     // instantiate llm model
-    const model = new ChatOpenAI({ model: "gpt-3.5-turbo" });
+    const model = new ChatOpenAI({ model: "gpt-4o" }); //gpt-3.5-turbo
 
     // form llm prompt
-    const messages = [
-      new SystemMessage("You are a vision model that gives only 3 values car make, colour and number plate"),
-      new HumanMessage(userInput),
-    ];
+    // const messages = [
+    //   new SystemMessage("You are a vision model that gives only 3 values car make, colour and number plate"),
+    //   new HumanMessage(userInput),
+    // ];
+
+    let prompt = ChatPromptTemplate.fromMessages([
+        new AIMessage({
+          content: "You are a useful bot that returns car make, car colour and number plate for every image you see."
+        }),
+        new HumanMessage({
+          content: [
+            { "type": "text", 
+              "text": "Identify the car make, colour and number plate in this image. Only give 3 words as output."
+            },
+            {
+              "type": "image_url",
+              "image_url": {
+                "url": "data:image/jpeg;base64," + userImageInput
+              }
+            }
+          ]
+        })
+      ])
+
+    let chain = prompt
+        .pipe(model)
+        // .pipe(new CustomListOutputParser({ separator: `\n` }))
+
+    let response = await chain.invoke()
     
     // invoke GPT models
-    const gptOutput = await model.invoke(messages);
-    return(gptOutput);
+    // const gptOutput = await model.invoke(messages);
+    return(response);
 }
 
 app.post('/invoke-llm', async (req, res) => {
     try {
         
-        // let gptOutput = await callLlm(req.body.input);
-        console.log(typeof req.body.Image);
+        let gptOutput = await callLlm(req.body.Image);
 
-        res.status(200).send(req.body);
+        res.status(200).send(gptOutput);
       } catch (err) {
         console.error('Error invoking LLM:', err);
         res.status(500).send('Internal Server Error');
