@@ -85,7 +85,7 @@ async function generateData() {
 
         // disable and grey out button while backend process
         generateButton.disabled = true;
-        // generateButton.style.backgroundColor = 'grey';
+        generateButton.textContent = 'Loading...';
         
         const reader = new FileReader();
         reader.onloadend = async function () {
@@ -112,6 +112,7 @@ async function generateData() {
             infoContainer.style.display = 'block';
 
             generateButton.disabled = false;
+            generateButton.textContent = 'Generate Data';
         }
 
         reader.readAsDataURL(file); // Read the image file as Base64
@@ -151,6 +152,7 @@ function submitData(){
     tableBody.appendChild(newRow);
 
     // Hide modal and clear fields
+    parkingBayInput.value = ''; // erase parking bay value of previous insert
     hideModal();
 
 }

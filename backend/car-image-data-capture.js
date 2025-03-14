@@ -28,12 +28,12 @@ async function callLlm(userImageInput){
 
     let prompt = ChatPromptTemplate.fromMessages([
         new AIMessage({
-          content: "You are a useful bot that returns car make, car colour and full license plate, this includes the letters and numbers, for every image you see."
+          content: "You are a multipurpose ANPR that returns car make, car colour and all the characters on the license plate, for every image you see."
         }),
         new HumanMessage({
           content: [
             { "type": "text", 
-              "text": "Identify the car make, colour and license plate in this image. Only give 3 words as output."
+              "text": "Identify the car make, colour and license plate in this image."
             },
             {
               "type": "image_url",
@@ -50,8 +50,6 @@ async function callLlm(userImageInput){
 
     let response = await chain.invoke()
     
-    // invoke GPT models
-    // const gptOutput = await model.invoke(messages);
     console.log('gpt response on backend:', response);
     return(response);
 }
