@@ -1,15 +1,24 @@
 
 ////////////////////////////// place in separate file //////////////////////
 // creating car object
-function Car(make, clr, license_plate, parking_bay) {
-    this.make = make;
-    this.clr = clr;
-    this.license_plate = license_plate;
-    this.parking_bay = parking_bay;
+// function Car(make, clr, license_plate, parking_bay) {
+//     this.make = make;
+//     this.clr = clr;
+//     this.license_plate = license_plate;
+//     this.parking_bay = parking_bay;
 
-    this.addParkingBay = function(pb){
-        this.parking_bay = pb;
-    };
+//     this.addParkingBay = function(pb){
+//         this.parking_bay = pb;
+//     };
+// };
+
+// const carDetected = new Car('make', 'colour', 'license plate', 'parking bay');
+
+const car = {
+    make: 'make',
+    colour: 'colour',
+    license_plate: 'license plate',
+    parking_bay: 'parking bay,'
 }
 /////////////////////////////////////////////////////////////////////////////
 
@@ -68,7 +77,7 @@ async function callBackendLLM(inputImage, url) {
 }
 
 async function generateData() {
-    infoContainer.style.display = 'block';
+
     file = fileInput.files[0]
     console.log(file);
 
@@ -86,18 +95,21 @@ async function generateData() {
             const llmResponse = await callBackendLLM(base64String, url);
 
             // create car object
-            const carDetected = new Car(llmResponse.make, llmResponse.colour, llmResponse.license_plate, '');
+            // const carDetected = new Car(llmResponse.make, llmResponse.colour, llmResponse.license_plate, '');
+            car.make = llmResponse.make;
+            car.colour = llmResponse.colour;
+            car.license_plate = llmResponse.license_plate;
+            car.parking_bay = '';
+
+            console.log(car);
+            console.log('GPT response:', llmResponse);
             
             // set info for popup
-            parkingBayInput.innerText = '';
-            carMakeInput.value = carDetected.make;
-            carColInput.value = carDetected.clr;
-            carLicensePlateInput.value = carDetected.license_plate;
+            parkingBayInput.innerText = car.parking_bay;
+            carMakeInput.value = car.make;
+            carColInput.value = car.colour;
+            carLicensePlateInput.value = car.license_plate;
             infoContainer.style.display = 'block';
-
-            console.log(carDetected);
-
-            console.log('GPT response:', llmResponse);
 
             generateButton.disabled = false;
         }
