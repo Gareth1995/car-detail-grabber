@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { ChatOpenAI } from "@langchain/openai";
-import { HumanMessage, SystemMessage, AIMessage  } from "@langchain/core/messages";
+import { HumanMessage, AIMessage  } from "@langchain/core/messages";
 import { ChatPromptTemplate } from "@langchain/core/prompts"
 import cors from 'cors';
 import express from 'express';
@@ -8,7 +8,6 @@ import { z } from "zod";
 
 // api keys
 dotenv.config();
-// const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 const app = express();
 app.use(express.json({ limit: '10mb' }));
