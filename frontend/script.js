@@ -62,6 +62,8 @@ async function callBackendLLM(inputImage, url) {
 
 async function generateData() {
 
+    file = fileInput.files[0];
+
     if(file){
 
         // disable generate data button while backend process
@@ -72,7 +74,8 @@ async function generateData() {
         reader.onloadend = async function () {
             const base64String = reader.result.split(',')[1]; // Get Base64 part of image input
 
-            const url = 'http://localhost:3000/invoke-llm';  // server url for data gen
+            // const url = 'http://localhost:3000/invoke-llm';  // server url for data gen
+            const url = 'https://cardetailapi.onrender.com/invoke-llm';
             const llmResponse = await callBackendLLM(base64String, url);
 
             // assign car attributes
