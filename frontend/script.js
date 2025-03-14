@@ -1,12 +1,31 @@
+
+////////////////////////////// place in separate file //////////////////////
+// creating car object
+function Car(make, clr, license_plate, parking_bay) {
+    this.make = make;
+    this.clr = clr;
+    this.license_plate = license_plate;
+    this.parking_bay = parking_bay;
+
+    this.addParkingBay = function(pb){
+        this.parking_bay = pb;
+    };
+}
+/////////////////////////////////////////////////////////////////////////////
+
 // saving elements to variable
 const dropZone = document.getElementById("drop-zone");
 const fileInput = document.getElementById("file-input");
 const generateButton = document.getElementById("generate-data");
 const infoContainer = document.getElementsByClassName("info-container")[0];
+const parkingBayInput = document.getElementById("parking-bay");
+const carMakeInput = document.getElementById("car-make");
+const carColInput = document.getElementById("car-colour");
+const carLicensePlateInput = document.getElementById("car-number-plate");
 
 // add event listners
 fileInput.addEventListener("change", uploadImage);
-generateButton.addEventListener("click", generateData);
+// generateButton.addEventListener("click", generateData);
 
 dropZone.addEventListener("click", () => fileInput.click());
 
@@ -37,6 +56,7 @@ function uploadImage() {
     dropZone.style.backgroundImage = `url(${imgUrl})`; // set the image url as background image 
 }
 
+// function to call the backend that calls the gpt model using lang chain
 async function callBackendLLM(inputImage, url) {    
     try {
         const response = await axios.post(url, { Image: inputImage });
@@ -48,6 +68,7 @@ async function callBackendLLM(inputImage, url) {
 }
 
 async function generateData() {
+    generateButton.disabled = true;
     file = fileInput.files[0]
     console.log(file);
 
@@ -57,18 +78,27 @@ async function generateData() {
         reader.onloadend = async function () {
             const base64String = reader.result.split(',')[1]; // Get Base64 part
 
-            //////// Make this a separate function /////////////////////////
             const url = 'http://localhost:3000/invoke-llm';  // server url for data gen
             const llmResponse = await callBackendLLM(base64String, url);
+
+            // create car object
+            const carDetected = new Car(llmResponse.make, llmResponse.colour, llmResponse.license_plate, '');
+            
+            // set info for popup
+            parkingBayInput.innerText = '';
+            carMakeInput.value = carDetected.make;
+            carColInput.value = carDetected.clr;
+            carLicensePlateInput.value = carDetected.license_plate;
+            infoContainer.style.display = 'block';
+
+            console.log(carDetected);
+
             console.log('GPT response:', llmResponse);
-            /////////////////////////////////////////////////////////
         }
 
         reader.readAsDataURL(file); // Read the image file as Base64
     }
-    
-    // infoContainer.style.display = 'block';
-    
+    generateButton.disabled = false;
 }
 
 function hideModal(){
