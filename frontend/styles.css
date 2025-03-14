@@ -46,6 +46,18 @@ button {
     border-radius: 5px;
 }
 
+button:active {
+    transform: translateY(2px); /* Moves button down slightly */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adds a soft shadow */
+}
+
+button:disabled {
+    transform: translateY(0px); /* Moves button down slightly */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0); /* Adds a soft shadow */
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 button:hover {
     background: #0056b3;
 }
@@ -84,7 +96,7 @@ button:hover {
 .info-container {
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 20%;
     transform: translate(-50%, -50%);
     background: white;
     padding: 20px;

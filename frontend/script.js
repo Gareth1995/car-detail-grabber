@@ -68,11 +68,15 @@ async function callBackendLLM(inputImage, url) {
 }
 
 async function generateData() {
-    generateButton.disabled = true;
+    infoContainer.style.display = 'block';
     file = fileInput.files[0]
     console.log(file);
 
     if(file){
+
+        // disable and grey out button while backend process
+        generateButton.disabled = true;
+        generateButton.style.backgroundColor = 'grey';
         
         const reader = new FileReader();
         reader.onloadend = async function () {
@@ -94,11 +98,12 @@ async function generateData() {
             console.log(carDetected);
 
             console.log('GPT response:', llmResponse);
+
+            generateButton.disabled = false;
         }
 
         reader.readAsDataURL(file); // Read the image file as Base64
     }
-    generateButton.disabled = false;
 }
 
 function hideModal(){
