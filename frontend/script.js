@@ -85,7 +85,7 @@ async function generateData() {
 
         // disable and grey out button while backend process
         generateButton.disabled = true;
-        generateButton.style.backgroundColor = 'grey';
+        // generateButton.style.backgroundColor = 'grey';
         
         const reader = new FileReader();
         reader.onloadend = async function () {
@@ -123,5 +123,34 @@ function hideModal(){
 }
 
 function submitData(){
-    
+
+    // get values from the car detail popup
+    const parkingBay = parkingBayInput.value;
+    const make = carMakeInput.value;
+    const colour = carColInput.value;
+    const licensePlate = carLicensePlateInput.value;
+
+    if (!make || !colour || !licensePlate || !parkingBay) {
+        alert("Please fill in all fields before submitting.");
+        return;
+    }
+
+    // Get table body
+    const tableBody = document.getElementById("car-data-table").querySelector("tbody");
+
+    // Create new row
+    const newRow = document.createElement("tr");
+    newRow.innerHTML = `
+        <td>${parkingBay}</td>
+        <td>${make}</td>
+        <td>${colour}</td>
+        <td>${licensePlate}</td>
+    `;
+
+    // Append row to table
+    tableBody.appendChild(newRow);
+
+    // Hide modal and clear fields
+    hideModal();
+
 }

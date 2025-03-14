@@ -74,6 +74,7 @@ button {
 button:active {
     transform: translateY(2px); /* Moves button down slightly */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adds a soft shadow */
+    background-color: #007BFF;
 }
 
 button:disabled {
@@ -83,7 +84,7 @@ button:disabled {
     cursor: not-allowed;
 }
 
-button:hover {
+button:hover:active {
     background: #0056b3;
 }
 
