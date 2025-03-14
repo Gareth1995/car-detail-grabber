@@ -1,26 +1,11 @@
 
-////////////////////////////// place in separate file //////////////////////
-// creating car object
-// function Car(make, clr, license_plate, parking_bay) {
-//     this.make = make;
-//     this.clr = clr;
-//     this.license_plate = license_plate;
-//     this.parking_bay = parking_bay;
-
-//     this.addParkingBay = function(pb){
-//         this.parking_bay = pb;
-//     };
-// };
-
-// const carDetected = new Car('make', 'colour', 'license plate', 'parking bay');
-
+// car object to store car details globally
 const car = {
     make: 'make',
     colour: 'colour',
     license_plate: 'license plate',
     parking_bay: 'parking bay,'
 }
-/////////////////////////////////////////////////////////////////////////////
 
 // saving elements to variable
 const dropZone = document.getElementById("drop-zone");
@@ -34,7 +19,6 @@ const carLicensePlateInput = document.getElementById("car-number-plate");
 
 // add event listners
 fileInput.addEventListener("change", uploadImage);
-// generateButton.addEventListener("click", generateData);
 
 dropZone.addEventListener("click", () => fileInput.click());
 
@@ -72,30 +56,26 @@ async function callBackendLLM(inputImage, url) {
         return response.data; // Ensure this is returned
     } catch (error) {
         console.error("Error calling backend:", error);
-        return null; // Return null or handle error properly
+        return error; // Return null or handle error properly
     }
 }
 
 async function generateData() {
 
-    file = fileInput.files[0]
-    console.log(file);
-
     if(file){
 
-        // disable and grey out button while backend process
+        // disable generate data button while backend process
         generateButton.disabled = true;
         generateButton.textContent = 'Loading...';
         
         const reader = new FileReader();
         reader.onloadend = async function () {
-            const base64String = reader.result.split(',')[1]; // Get Base64 part
+            const base64String = reader.result.split(',')[1]; // Get Base64 part of image input
 
             const url = 'http://localhost:3000/invoke-llm';  // server url for data gen
             const llmResponse = await callBackendLLM(base64String, url);
 
-            // create car object
-            // const carDetected = new Car(llmResponse.make, llmResponse.colour, llmResponse.license_plate, '');
+            // assign car attributes
             car.make = llmResponse.make;
             car.colour = llmResponse.colour;
             car.license_plate = llmResponse.license_plate;
@@ -110,7 +90,8 @@ async function generateData() {
             carColInput.value = car.colour;
             carLicensePlateInput.value = car.license_plate;
             infoContainer.style.display = 'block';
-
+            
+            // enable generate data button again
             generateButton.disabled = false;
             generateButton.textContent = 'Generate Data';
         }
@@ -119,10 +100,12 @@ async function generateData() {
     }
 }
 
+// function to hide modal popup
 function hideModal(){
     infoContainer.style.display = 'none';
 }
 
+// function that adds llm generated data to frontend table
 function submitData(){
 
     // get values from the car detail popup
@@ -154,5 +137,4 @@ function submitData(){
     // Hide modal and clear fields
     parkingBayInput.value = ''; // erase parking bay value of previous insert
     hideModal();
-
 }
