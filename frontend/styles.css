@@ -52,7 +52,7 @@ body {
     background-position: center;
     background-size: cover;
     min-width: 200px;  /*Prevents it from shrinking too much */
-    min-height: 200px; /* Prevents it from shrinking too much */
+    min-height: 300px; /* Prevents it from shrinking too much */
     /* max-height: 250px; */
 }
 
