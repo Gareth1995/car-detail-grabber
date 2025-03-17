@@ -25,7 +25,7 @@ body {
     height: 70%;
     width: 50%;
     min-width: 400px; /*Prevents it from shrinking too much*/
-    min-height: 800px;
+    min-height: 900px;
 }
 
 .main-content {
