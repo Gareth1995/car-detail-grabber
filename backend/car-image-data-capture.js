@@ -22,13 +22,13 @@ async function callLlm(userImageInput){
     const carDetails = z.object({
         make: z.string().describe("The car make"),
         colour: z.string().describe("The car colour"),
-        license_plate: z.number().optional().describe("The license plate represented as a string."),
+        license_plate: z.string().optional().describe("The license plate represented as a string."),
     });
 
     let prompt = ChatPromptTemplate.fromMessages([
-        new AIMessage({
-          content: "You are a multipurpose ANPR that returns car make, car colour and all the characters on the license plate, for every image you see."
-        }),
+        // new AIMessage({
+        //   content: "You are a multipurpose ANPR that returns car make, car colour and all the characters on the license plate, for every image you see."
+        // }),
         new HumanMessage({
           content: [
             { "type": "text", 
@@ -37,7 +37,8 @@ async function callLlm(userImageInput){
             {
               "type": "image_url",
               "image_url": {
-                "url": "data:image/jpeg;base64," + userImageInput
+                "url": "data:image/jpeg;base64," + userImageInput,
+                "detail": "high"
               }
             }
           ]
