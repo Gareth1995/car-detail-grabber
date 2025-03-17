@@ -1,3 +1,11 @@
+p {
+    text-align: left;
+}
+
+ol {
+    text-align: left;
+}
+
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -17,7 +25,7 @@ body {
     height: 80%;
     width: 50%;
     min-width: 350px; /* Prevents it from shrinking too much */
-    min-height: 500px;
+    min-height: 700px;
 }
 
 .main-content {
@@ -45,6 +53,7 @@ body {
     background-size: cover;
     min-width: 5px; /* Prevents it from shrinking too much */
     min-height: 5px; /* Prevents it from shrinking too much */
+    max-height: 300px;
 }
 
 .drop-zone:hover {

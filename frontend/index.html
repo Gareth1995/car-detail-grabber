@@ -12,7 +12,16 @@
         <!-- Left Side - Image drop section -->
         <div class="image-drop-container">
             <h1>Car Data Extractor</h1>
-            <p>Upload an image of a car, and the system will extract details like make, color, and number plate.</p>
+            <p>
+                <h3 style="text-align: left;">How it works</h3>
+                <ol>
+                   <li><b>Upload or Capture a Photo</b> - Select an image of a car with its number plate clearly visible.</li><br>
+                   <li><b>Generate Data</b> - Click the "Generate Data" button to extract the car's make, color, and license plate.</li><br>
+                   <li><b>Review & Edit</b> - The detected details will appear in a popup. You can manually correct any inaccuracies and add further details (such as parking bay).</li>
+                </ol>
+
+                <span>🚀 <b>Note</b>: Processing may take up to <b>1 minute</b> as the backend service runs on a free-tier server. Paid versions enable faster, always-on functionality.</span>
+            </p>
             
             <div class="drop-zone" id="drop-zone">Drag image here or click to upload</div>
             <input type="file" id="file-input" accept="image/*" hidden>
