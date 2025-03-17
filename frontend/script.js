@@ -141,3 +141,25 @@ function submitData(){
     parkingBayInput.value = ''; // erase parking bay value of previous insert
     hideModal();
 }
+
+// make info container moveable
+let offsetX = 0, offsetY = 0, isDragging = false;
+
+infoContainer.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    offsetX = e.clientX - infoContainer.offsetLeft;
+    offsetY = e.clientY - infoContainer.offsetTop;
+    infoContainer.style.cursor = "grabbing";
+});
+
+document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    infoContainer.style.left = `${e.clientX - offsetX}px`;
+    infoContainer.style.top = `${e.clientY - offsetY}px`;
+});
+
+document.addEventListener("mouseup", () => {
+    isDragging = false;
+    infoContainer.style.cursor = "grab";
+});
+
